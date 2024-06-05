@@ -10,6 +10,16 @@
                 <input type="text" name="name_project" class="form-control" id="name_project" placeholder="Insert the name project" value="{{old('name_project')}}">
             </div>
             <div class="mb-3">
+                <label for="type_id" class="form-label fw-bold">Name Project</label>
+                <select name="type_id" id="type_id">
+                    <option value="">--Select Type--</option>
+                    @foreach($types as $type)
+                    <option @selected( $type->id == old('type_id')) value="{{$type->id}}">{{$type->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="url_github" class="form-label fw-bold">Link Git</label>
                 <input type="text" name="url_github" class="form-control" id="url_github" placeholder="Insert the url git" value="{{old('url_github')}}">
             </div>

@@ -2,12 +2,13 @@
 
 @section('content')
 <section class="py-5">
-    <div class="container p-2">
+    <div class="container ">
         <div class="row">
             <table class="table table-striped">
                 <thead>
                     <tr class="text-center">
                         <th scope="col" class="p-2 text-primary">Name Project</th>
+                        <th scope="col" class="p-2 text-primary">Type</th>
                         <th scope="col" class="p-2 text-primary">GitHub Link</th>
                         <th scope="col" class="p-2 text-primary">Description</th>
                         <th scope="col" class="p-2 text-primary">Edit</th>
@@ -17,6 +18,8 @@
                 <tbody>
                     <tr>
                         <th scope="row" class="p-3">{{$project->name_project}}</th>
+                        <!-- <td class="p-3">{{optional($project->type)->name}}</td> --> <!-- MODO CONTRATTO -->
+                        <td class="p-3">{{$project->type ? $project->type->name : '--'}}</td>
                         <td class="p-3">{{$project->url_github}}</td>
                         <td class="p-3">{!! $project->description !!}</td>
                         <td class="p-3">

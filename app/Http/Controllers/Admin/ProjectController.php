@@ -7,6 +7,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use App\Models\Type;
 
 class ProjectController extends Controller
 {
@@ -24,7 +25,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $types = Type::orderBy('name', 'asc')->get();
+
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -36,6 +39,7 @@ class ProjectController extends Controller
             'name_project' => 'required|max:150|string',
             'url_github' => 'required|string',
             'description' => 'nullable|string',
+            'type_id' => 'nullable|exists:types,id',
         ]);
 
         $form_data = $request->all();
@@ -78,7 +82,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::orderBy('name', 'asc')->get();
+
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -91,6 +97,7 @@ class ProjectController extends Controller
             'slug' => ['required', 'max:255', Rule::unique('projects', 'slug')->ignore($project->id)],
             'url_github' => 'required|string',
             'description' => 'nullable|string',
+            'type_id' => 'nullable|exists:types,id',
         ]);
 
         $form_data = $request->all();
