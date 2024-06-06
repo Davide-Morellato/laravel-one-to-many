@@ -46,6 +46,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-warning fw-bold" href="{{route('admin.projects.index')}}">{{ __('Projects') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-success fw-bold" href="{{route('admin.projects.create')}}">{{ __('Add Project') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

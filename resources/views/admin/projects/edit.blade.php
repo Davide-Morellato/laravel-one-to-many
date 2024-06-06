@@ -15,7 +15,7 @@
                 <input type="text" name="slug" class="form-control" id="slug" placeholder="Insert the name project" value="{{old('slug', $project->slug)}}">
             </div>
             <div class="mb-3">
-                <label for="type_id" class="form-label fw-bold">Name Project</label>
+                <label for="type_id" class="form-label fw-bold d-block">Type</label>
                 <select name="type_id" id="type_id">
                     <option value="">--Select Type--</option>
                     @foreach($types as $type)
@@ -37,20 +37,20 @@
                 <a href="{{route('admin.projects.index')}}" class="btn btn-warning text-primary fw-bold">Back to the Future</a>
             </div>
         </form>
-        
+
         <div class="my-4 centered w-25">
-                @if ( $errors->any() )
-                <div class="alert alert-danger op-90">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                        <li>
-                            {{ $error }}
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
+            @if ( $errors->any() )
+            <div class="alert alert-danger op-90">
+                <ul>
+                    @foreach($errors->all() as $error)
+                    <li>
+                        {{ $error }}
+                    </li>
+                    @endforeach
+                </ul>
             </div>
+            @endif
+        </div>
     </div>
 </section>
 

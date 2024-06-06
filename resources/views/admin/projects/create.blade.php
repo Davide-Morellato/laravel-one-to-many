@@ -10,7 +10,7 @@
                 <input type="text" name="name_project" class="form-control" id="name_project" placeholder="Insert the name project" value="{{old('name_project')}}">
             </div>
             <div class="mb-3">
-                <label for="type_id" class="form-label fw-bold">Name Project</label>
+                <label for="type_id" class="form-label fw-bold d-block">Type</label>
                 <select name="type_id" id="type_id">
                     <option value="">--Select Type--</option>
                     @foreach($types as $type)

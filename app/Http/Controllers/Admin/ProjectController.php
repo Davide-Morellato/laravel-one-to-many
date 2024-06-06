@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\StoreProjectRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use App\Models\Type;
 
 class ProjectController extends Controller
@@ -33,14 +34,9 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $request->validate([
-            'name_project' => 'required|max:150|string',
-            'url_github' => 'required|string',
-            'description' => 'nullable|string',
-            'type_id' => 'nullable|exists:types,id',
-        ]);
+        $form_data = $request->validated();
 
         $form_data = $request->all();
 
@@ -90,17 +86,33 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $request->validate([
-            'name_project' => 'required|max:150|string',
-            'slug' => ['required', 'max:255', Rule::unique('projects', 'slug')->ignore($project->id)],
-            'url_github' => 'required|string',
-            'description' => 'nullable|string',
-            'type_id' => 'nullable|exists:types,id',
-        ]);
+        $form_data = $request->validated();
 
         $form_data = $request->all();
+
+        
+        //controllo la generazione dello slug,
+        //evitando che ci siano errori qualora ce ne sia uno già esistente
+        //assegnando al nuovo "-n" (contatore)
+        $base_slug = Str::slug($form_data['name_project']);
+
+        $slug = $base_slug;
+
+        $n = 0;
+
+        do{
+            $find = Project::where('slug', $slug)->first();
+
+            if($find !== null){
+                $n++;
+                $slug = $base_slug .'-'. $n;
+            }
+
+        }while($find !== null);
+
+        $form_data['slug'] = $slug; //aggiungo all'array associativo in form_data lo slug
 
         $project->fill($form_data);
 
