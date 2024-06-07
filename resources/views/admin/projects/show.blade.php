@@ -32,16 +32,24 @@
             <div class="row">
                 <ul>
                     <!-- Stampo in pagina la lista di altri link in base al tipo -->
+                    @if($project->type !== null)
                     @foreach($project->type->projects as $related_project)
                     <li>
                         <a href="{{route('admin.projects.show', $related_project)}}">{{$related_project->name_project}}</a>
                     </li>
                     @endforeach
+                    @else
+                    <li>
+                        <p>
+                            This Project hasn't related typess.
+                        </p>
+                    </li>
+                    @endif
                 </ul>
             </div>
         </div>
         <div class="py-3 d-flex justify-content-evenly">
-        <a href="{{route('admin.projects.edit', $project)}}" class="mt-4 btn btn-success text-light fw-bold px-3">Edit</a>
+            <a href="{{route('admin.projects.edit', $project)}}" class="mt-4 btn btn-success text-light fw-bold px-3">Edit</a>
             <form action="{{route('admin.projects.destroy', $project)}}" method="POST" onsubmit="return deleteFunction()">
                 @csrf
                 @method('DELETE')
